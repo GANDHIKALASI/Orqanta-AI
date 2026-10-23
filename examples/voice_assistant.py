@@ -25,8 +25,21 @@ def control_music(action: str, song: str = ""):
 @orqanta.tool
 def check_device_battery():
     """Query current device battery percentage."""
-    print("🔋 [Battery Action Executed] Battery: 91% (Healthy)")
-    return {"battery_percent": 91}
+    # Attempt to read real battery if running on physical device
+    bat_path = "/sys/class/power_supply/BAT0"
+    if os.path.exists(bat_path):
+        try:
+            with open(f"{bat_path}/capacity") as f:
+                cap = int(f.read().strip())
+            with open(f"{bat_path}/status") as f:
+                status = f.read().strip()
+            print(f"🔋 [REAL Device Battery] Battery: {cap}% ({status})")
+            return {"battery_percent": cap, "status": status, "is_real_hardware": True}
+        except Exception:
+            pass
+    # Fallback simulation if running on VM or desktop without battery
+    print("🔋 [Simulated Battery] Battery: 91% (Healthy)")
+    return {"battery_percent": 91, "status": "Simulated", "is_real_hardware": False}
 
 def run_voice_pipeline(audio_transcript: str):
     """
