@@ -339,6 +339,10 @@ gcc -O3 main.c -Iinclude -Llib/linux-x86_64 -lorqanta -lm -lpthread -o vehicle_a
           <img src="https://img.shields.io/badge/GitHub-@GANDHIKALASI-181717?style=flat&logo=github&logoColor=white" alt="GitHub Profile"/>
         </a>
         &nbsp;
+        <a href="https://instagram.com/bug_gandhi">
+          <img src="https://img.shields.io/badge/Instagram-@bug__gandhi-E4405F?style=flat&logo=instagram&logoColor=white" alt="Instagram"/>
+        </a>
+        &nbsp;
         <a href="https://github.com/GANDHIKALASI/Orqanta-AI">
           <img src="https://img.shields.io/badge/Repository-Orqanta--AI-00f2fe?style=flat&logo=git&logoColor=black" alt="Repository"/>
         </a>
