@@ -329,10 +329,13 @@ gcc -O3 main.c -Iinclude -Llib/linux-x86_64 -lorqanta -lm -lpthread -o vehicle_a
     <td style="padding-left: 20px;">
       <h3 style="margin: 0; color: #00f2fe;">Gandhi Kalasi</h3>
       <p style="margin: 4px 0 10px 0; font-size: 14px; color: #94a3b8;">
-        <b>AI Engineer & Edge Systems Architect</b> | Creator & Maintainer of <i>Orqanta AI</i>
-      </p>
-      <p style="margin: 0 0 12px 0; font-size: 13.5px; line-height: 1.5;">
-        Passionate about bringing ultra-compact, high-performance foundation models to constrained edge hardware, automotive ECUs, and real-time mobility systems without relying on cloud infrastructure.
+      
+<p>
+  <b>AI Product Engineer Aspirant</b> | Creator &amp; Maintainer of <i>Orqanta AI</i>
+</p>
+<p style="margin: 0 0 12px 0; font-size: 13.5px; line-height: 1.5;">
+  Passionate about building AI-powered products, exploring large language models (LLMs) and AI agents, and developing practical software solutions that turn complex ideas into useful, real-world applications.
+</p>
       </p>
       <div>
         <a href="https://github.com/GANDHIKALASI">
