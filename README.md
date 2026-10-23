@@ -1,23 +1,8 @@
----
-language:
-- en
-license: apache-2.0
-tags:
-- edge-ai
-- automotive
-- function-calling
-- electric-vehicles
-- two-wheeler
-- embedded
-- cpu-only
-pipeline_tag: text-generation
----
-
 <div align="center">
 
 ![Orqanta AI](assets/banner.svg)
 
-# Orqanta AI (Psycho Engine)
+# Orqanta AI
 ### Ultra-Lightweight 121M Foundation Model for Electric & Petrol Vehicles
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
@@ -36,7 +21,7 @@ pipeline_tag: text-generation
 
 ## ⚡ Executive Summary
 
-**Orqanta AI** (powered by the native C++ **Psycho Engine**) is an ultra-fast, 100% offline edge AI foundation model purpose-built for automotive intelligence, in-vehicle infotainment (IVI), and digital instrument clusters. 
+**Orqanta AI** (powered by a native C++ inference engine) is an ultra-fast, 100% offline edge AI foundation model purpose-built for automotive intelligence, in-vehicle infotainment (IVI), and digital instrument clusters.
 
 Engineered with **121 Million Parameters** and packed into a **33.7 MB zero-overhead `.cact` binary container**, Orqanta AI runs entirely on embedded CPUs, requiring **less than 80 MB of RAM** with **sub-50ms inference times** (guaranteed execution under 2 seconds on any automotive ECU or cluster SoC with $\le$ 2GB RAM).
 
@@ -69,7 +54,7 @@ The Orqanta base model (`models/orqanta.cact`) is configured with the following 
 
 ```text
 ================================================================================
-  Orqanta AI (Psycho Engine) — 121M Architecture Specification
+  Orqanta AI — 121M Architecture Specification
 ================================================================================
   • Total Parameters:          121,021,910 (~121.02 Million / 121M)
   • Quantized Weights (CQ):    120,394,752 (~120.39M) [Codebook Quantized 4-bit]
