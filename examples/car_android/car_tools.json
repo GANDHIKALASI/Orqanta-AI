@@ -1,0 +1,78 @@
+[
+  {
+    "name": "set_climate",
+    "description": "Adjust car cabin temperature and AC fan speed",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "integer",
+          "description": "Target temperature in Celsius (16-30)"
+        },
+        "fan_speed": {
+          "type": "integer",
+          "description": "Fan speed from 1 (low) to 5 (high)"
+        },
+        "ac_enabled": {
+          "type": "boolean",
+          "description": "Whether AC cooling compressor is active"
+        }
+      },
+      "required": ["temperature"]
+    }
+  },
+  {
+    "name": "control_windows",
+    "description": "Open or close car windows or sunroof",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string",
+          "description": "Window to control: driver, passenger, rear, sunroof, or all"
+        },
+        "action": {
+          "type": "string",
+          "description": "Action: open, close, or vent"
+        }
+      },
+      "required": ["target", "action"]
+    }
+  },
+  {
+    "name": "set_navigation",
+    "description": "Start GPS navigation to a destination",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "destination": {
+          "type": "string",
+          "description": "Address, city, or landmark name"
+        },
+        "avoid_tolls": {
+          "type": "boolean",
+          "description": "Avoid toll roads"
+        }
+      },
+      "required": ["destination"]
+    }
+  },
+  {
+    "name": "media_control",
+    "description": "Control music and media playback in the car",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Action: play, pause, next, previous, volume_up, volume_down"
+        },
+        "query": {
+          "type": "string",
+          "description": "Song, artist, or radio station name"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+]
