@@ -1,3 +1,18 @@
+---
+language:
+- en
+license: apache-2.0
+tags:
+- edge-ai
+- automotive
+- function-calling
+- electric-vehicles
+- two-wheeler
+- embedded
+- cpu-only
+pipeline_tag: text-generation
+---
+
 <div align="center">
 
 ![Orqanta AI](assets/banner.svg)
