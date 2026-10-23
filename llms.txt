@@ -1,0 +1,57 @@
+# Orqanta AI (Psycho Engine)
+
+> Orqanta AI is an ultra-fast on-device foundation model for tool calling, device control, and structured extraction. This Python package (`orqanta-ai`) provides inference, agentic orchestration, and build tools. Text goes in, a JSON tool call comes back; a byte-level grammar compiled from your schemas constrains every token, so the call is always well-formed. A lightweight engine and the 34 MB `orqanta.cact` weights run natively with <80MB RAM on CPU without requiring any GPU.
+
+## Install
+
+```sh
+pip install -e .                # runtime (inference only)
+pip install -e ".[train]"       # adds JAX + training deps for finetune/build
+```
+
+`import orqanta` is lightweight. Precompiled standalone native binaries for x86_64 (Linux laptops) and ARM64 (Android Automotive cars, smartwatches, and single-board computers) are bundled in `bin/`.
+
+## Core API
+
+- `orqanta.Orqanta(tools=None, system=None, weights=None, tool_index_path=None, buffer_size=65536)` - create an agent bound to one toolset.
+  - `tools`: list of decorated functions, Pydantic models, raw JSON-schema dicts, or a JSON string.
+  - `system`: optional environment-facts string (see System facts).
+  - `weights`: path to a tuned `.cact` to load instead of the baked base model.
+- `agent.run(query, max_steps=1, max_new_tokens=512) -> dict` - agentic tool calling: model selects calls, Orqanta executes your Python functions, feeds results back, and returns the response.
+- `agent.complete(text, max_new_tokens=512) -> dict` - one turn completion returning JSON envelope.
+- `agent.reset()` - rewind the conversation, keep tools loaded.
+- `orqanta.tool` - decorator that turns a function into a tool schema (attached as `fn._orqanta_tool`).
+- `orqanta.Field(...)` - per-argument constraints; attach inline with `typing.Annotated`.
+- `orqanta.extract(text, schema, system=None, max_new_tokens=512, weights=None, strict=True)` - one-shot structured extraction.
+
+## Defining tools
+
+Decorator - signature gives types, docstring is the description, Google-style `Args:` gives per-argument docs, a default makes an argument optional:
+
+```python
+import orqanta
+from typing import Literal
+
+@orqanta.tool
+def set_car_climate(temperature: int, mode: Literal["heat", "cool", "auto"] = "auto"):
+    """Set the car cabin climate.
+
+    Args:
+        temperature: target temperature in Celsius
+    """
+    return {"temperature": temperature, "mode": mode}
+
+agent = orqanta.Orqanta(tools=[set_car_climate])
+response = agent.run("Turn the AC to 22 degrees in cool mode")
+print(response["results"])
+```
+
+## CLI Usage
+
+```sh
+# Run one-shot completion on Linux laptop
+./bin/linux-x86_64/orqanta --model models/orqanta.cact --tools tools.json --prompt "Your prompt"
+
+# Serve as HTTP daemon
+./bin/linux-x86_64/orqanta --model models/orqanta.cact --tools tools.json --serve --port 8080
+```
