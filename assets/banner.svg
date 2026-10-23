@@ -14,5 +14,5 @@
 <text x="430" y="248" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="82" font-weight="700" fill="#ffffff" letter-spacing="-2" clip-path="url(#cw)">Orqanta AI</text>
 <text class="s" x="910" y="248" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="34" font-weight="600" fill="#00f2fe" letter-spacing="1">PSYCHO</text>
 <rect x="430" y="274" width="690" height="3" rx="1.5" fill="url(#glow)"/>
-<text class="s tag" x="430" y="322" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="2" fill="#94a3b8">FOUNDATION MODEL FOR CARS, WEARABLES &amp; LINUX · &lt;2GB RAM · &lt;2s LATENCY</text>
+<text class="s tag" x="430" y="322" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="2" fill="#94a3b8">AUTOMOTIVE FOUNDATION MODEL FOR CARS &amp; TWO-WHEELERS · &lt;2GB RAM · &lt;2s LATENCY</text>
 </svg>
