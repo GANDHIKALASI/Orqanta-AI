@@ -1,4 +1,4 @@
-# Dataset card: Orqanta VehicleGPT
+# Dataset card: Orqanta Orqanta-AI
 
 - Version: 1.0
 - Purpose: starter SFT data for a local/offline natural-language vehicle information assistant.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Orqanta VehicleGPT Dataset Benchmark & Evaluation Tool
-Evaluates Orqanta_VehicleGPT_Dataset_v1 splits (train, validation, test)
+Orqanta-AI Automotive Dataset Benchmark & Evaluation Tool
+Evaluates Orqanta_AI_Dataset_v1 splits (train, validation, test)
 and measures edge model latency, grounding rules, and category coverage.
 """
 
@@ -14,7 +14,7 @@ from collections import Counter
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import orqanta
 
-DATASET_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../Orqanta_VehicleGPT_Dataset_v1"))
+DATASET_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../Orqanta_AI_Dataset_v1"))
 
 def load_split(filename: str):
     path = os.path.join(DATASET_DIR, filename)
@@ -35,7 +35,7 @@ def print_dataset_summary():
     
     total = len(train_data) + len(val_data) + len(test_data)
     print("=" * 65)
-    print("  Orqanta VehicleGPT SFT Dataset v1.0 Overview")
+    print("  Orqanta-AI Automotive SFT Dataset v1.0 Overview")
     print("=" * 65)
     print(f"  • Total Examples:    {total}")
     print(f"  • Training Split:    {len(train_data)} ({len(train_data)/total*100:.1f}%)")

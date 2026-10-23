@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Orqanta VehicleGPT - Offline Automotive Telemetry & Diagnostics Assistant
-Trained and aligned on the Orqanta_VehicleGPT_Dataset_v1 dataset.
+Orqanta-AI - Offline Automotive Telemetry & Diagnostics Assistant
+Trained and aligned on the Orqanta_AI_Dataset_v1 dataset.
 
 Runs natively on ARM64 Android Automotive / Linux In-Vehicle Infotainment (IVI).
 Requirements: Pure CPU, <80MB RAM, Sub-50ms latency, Zero Cloud Dependency.
@@ -89,12 +89,12 @@ def filter_adas_events(date: str = "2026-10-14", event_type: str = "adas_disenga
     return {"events": events, "date": date}
 
 # -----------------------------------------------------------------------------
-# VehicleGPT Response Generator (Grounded, Safe, Non-Hallucinatory)
+# Orqanta-AI Response Generator (Grounded, Safe, Non-Hallucinatory)
 # -----------------------------------------------------------------------------
 
-def generate_vehiclegpt_response(user_query: str, retrieved_data: Dict[str, Any]) -> str:
+def generate_orqanta_response(user_query: str, retrieved_data: Dict[str, Any]) -> str:
     """
-    Applies the VehicleGPT system instructions from Orqanta_VehicleGPT_Dataset_v1:
+    Applies the Orqanta-AI system instructions from Orqanta_AI_Dataset_v1:
     - Answers only from supplied vehicle records
     - Distinguishes observed facts from possible causes
     - Never invents missing telemetry
@@ -134,8 +134,8 @@ def generate_vehiclegpt_response(user_query: str, retrieved_data: Dict[str, Any]
 
 def main():
     print("=" * 70)
-    print(" Orqanta VehicleGPT - Offline Automotive Telemetry & Diagnostics Demo")
-    print(" Grounded on Orqanta_VehicleGPT_Dataset_v1 (360 SFT In-Car Examples)")
+    print(" Orqanta-AI - Offline Automotive Telemetry & Diagnostics Demo")
+    print(" Grounded on Orqanta_AI_Dataset_v1 (360 SFT In-Car Examples)")
     print("=" * 70)
 
     agent = orqanta.Orqanta(tools=[
@@ -162,7 +162,7 @@ def main():
         print(f"   ⚙️ Dispatched Edge Actions: {actions}")
         print(f"   ⏱️ Inference Latency: {result.get('decode_tps')} tokens/sec | RAM: {result.get('peak_ram_mb')} MB")
 
-        # 2. Formulate grounded VehicleGPT response based on retrieved telemetry
+        # 2. Formulate grounded Orqanta-AI response based on retrieved telemetry
         retrieved = {}
         for action in actions:
             name = action.get("name")
@@ -175,8 +175,8 @@ def main():
             elif name == "filter_adas_events":
                 retrieved["adas_events"] = filter_adas_events()
 
-        explanation = generate_vehiclegpt_response(query, retrieved)
-        print(f"\n   🧠 [VehicleGPT Grounded Response]:\n   \"{explanation}\"")
+        explanation = generate_orqanta_response(query, retrieved)
+        print(f"\n   🧠 [Orqanta-AI Grounded Response]:\n   \"{explanation}\"")
         print("-" * 70)
 
 if __name__ == "__main__":

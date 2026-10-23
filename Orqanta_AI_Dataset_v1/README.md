@@ -1,7 +1,7 @@
-# Orqanta VehicleGPT starter fine-tuning dataset
+# Orqanta Orqanta-AI starter fine-tuning dataset
 
 ## What this is
-A compact, synthetic supervised fine-tuning (SFT) starter dataset for the VehicleGPT case study: natural-language querying over local vehicle telemetry, event logs, diagnostic records, trend comparisons, and safe handling of missing data.
+A compact, synthetic supervised fine-tuning (SFT) starter dataset for the Orqanta-AI case study: natural-language querying over local vehicle telemetry, event logs, diagnostic records, trend comparisons, and safe handling of missing data.
 
 Total examples: 360
 - Train: 288
@@ -12,7 +12,7 @@ The examples are synthetic and are not real vehicle telemetry or validated autom
 
 ## Files
 - `train.jsonl`, `validation.jsonl`, `test.jsonl`: chat-message format, one JSON object per line.
-- `vehiclegpt_dataset.csv`: flat format for inspection and quick data review.
+- `orqanta_ai_dataset.csv`: flat format for inspection and quick data review.
 - `DATASET_CARD.md`: scope, assumptions, limitations, and recommended use.
 - `sample_preview.json`: a few examples for inspection.
 
