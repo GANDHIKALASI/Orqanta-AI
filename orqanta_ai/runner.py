@@ -49,6 +49,18 @@ def find_orqanta_model() -> Optional[str]:
         if os.path.exists(c):
             return c
 
+    # Automatic download fallback from Hugging Face Hub (buggandhi/Orqanta-AI)
+    try:
+        from huggingface_hub import hf_hub_download
+        cached = hf_hub_download(
+            repo_id="buggandhi/Orqanta-AI",
+            filename="models/orqanta.cact",
+        )
+        if cached and os.path.exists(cached):
+            return cached
+    except Exception:
+        pass
+
     return None
 
 def run_native_completion(

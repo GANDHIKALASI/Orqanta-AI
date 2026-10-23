@@ -21,6 +21,7 @@ pipeline_tag: text-generation
 ### Ultra-Lightweight 121M Foundation Model for Electric & Petrol Vehicles
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-buggandhi%2FOrqanta--AI-ffcc00.svg)](https://huggingface.co/buggandhi/Orqanta-AI)
 [![Parameters](https://img.shields.io/badge/Parameters-121M_(121%2C021%2C910)-8a2be2.svg)](#-exact-model-parameters--specifications)
 [![Model Size](https://img.shields.io/badge/Model_Size-33.7_MB_(.cact)-00f2fe.svg)](#-exact-model-parameters--specifications)
 [![RAM Footprint](https://img.shields.io/badge/RAM_Peak-~78.9_MB-success.svg)](#-exact-model-parameters--specifications)
@@ -183,6 +184,46 @@ Orqanta-AI/
 │   └── voice_assistant.py       # Vehicle cockpit mic & helmet intercom voice pipeline
 └── scripts/
     └── eval_dataset.py          # Dual dataset benchmark & latency validator
+```
+
+---
+
+## ⚡ 1-Command Download & Run
+
+No compilation, no pip dependencies, and zero cloud API keys needed. You can clone and run Orqanta AI on your Linux PC, laptop, or embedded ECU in a single copy-paste command:
+
+### 🚗 Car Assistant: DTC Diagnostics & AC Control (1-Command)
+```bash
+git clone --depth 1 https://github.com/GANDHIKALASI/Orqanta-AI.git && cd Orqanta-AI && ./bin/linux-x86_64/orqanta --model models/orqanta.cact --tools examples/car_android/car_tools.json --prompt "Check diagnostic trouble codes and set temperature to 21 degrees"
+```
+
+### 🛵 Two-Wheeler Cluster: EV Battery & Range (1-Command)
+```bash
+git clone --depth 1 https://github.com/GANDHIKALASI/Orqanta-AI.git && cd Orqanta-AI && ./bin/linux-x86_64/orqanta --model models/orqanta.cact --tools examples/two_wheeler/two_wheeler_tools.json --prompt "Check my electric scooter battery percentage and estimated range in Eco mode"
+```
+
+### 📱 Android Automotive / ARM64 Cluster (1-Command ADB Deploy)
+```bash
+adb push bin/android-arm64/orqanta models/orqanta.cact examples/car_android/car_tools.json /data/local/tmp/ && adb shell "chmod +x /data/local/tmp/orqanta && /data/local/tmp/orqanta --model /data/local/tmp/orqanta.cact --tools /data/local/tmp/car_tools.json --prompt 'Check high voltage battery temperature and set AC to 20'"
+```
+
+---
+
+## 🤗 Download Base Model from Hugging Face Hub
+
+The official 121M base weights are published on **[Hugging Face: buggandhi/Orqanta-AI](https://huggingface.co/buggandhi/Orqanta-AI)**.
+
+#### 1. Download in 1 line using Hugging Face CLI:
+```bash
+hf download buggandhi/Orqanta-AI models/orqanta.cact --local-dir .
+```
+
+#### 2. Or download directly in Python:
+```python
+from huggingface_hub import hf_hub_download
+
+# Downloads models/orqanta.cact (33.7 MB) directly from Hugging Face
+model_path = hf_hub_download(repo_id="buggandhi/Orqanta-AI", filename="models/orqanta.cact")
 ```
 
 ---
@@ -359,6 +400,10 @@ gcc -O3 main.c -Iinclude -Llib/linux-x86_64 -lorqanta -lm -lpthread -o vehicle_a
         &nbsp;
         <a href="https://instagram.com/bug_gandhi">
           <img src="https://img.shields.io/badge/Instagram-@bug__gandhi-E4405F?style=flat&logo=instagram&logoColor=white" alt="Instagram"/>
+        </a>
+        &nbsp;
+        <a href="https://huggingface.co/buggandhi/Orqanta-AI">
+          <img src="https://img.shields.io/badge/Hugging_Face-buggandhi-yellow?style=flat&logo=huggingface&logoColor=black" alt="Hugging Face"/>
         </a>
         &nbsp;
         <a href="https://github.com/GANDHIKALASI/Orqanta-AI">

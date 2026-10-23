@@ -390,7 +390,7 @@ def main():
             dest = os.path.join(args.out, os.path.basename(filename))
             shutil.copyfile(cached, dest)
             print(f"  {'weights':<9} {dest}  {os.path.getsize(dest) / 1e6:.2f} MB")
-            print(f"  {'next':<9} needle.Needle(weights={dest!r}, tools=[...])")
+            print(f"  {'next':<9} orqanta.Orqanta(weights={dest!r}, tools=[...])")
     elif args.command == "fetch":
         from .agent import fetch
         generation = args.generation
