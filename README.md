@@ -3,13 +3,13 @@
 ![Orqanta AI](assets/banner.svg)
 
 # Orqanta AI (Psycho Engine)
-### Ultra-Lightweight Foundation Tool-Calling Model for Constrained Edge Devices
+### Ultra-Lightweight Automotive Foundation Model for Electric & Petrol Vehicles
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Memory](https://img.shields.io/badge/RAM_Footprint-%3C80MB_Peak-00f2fe.svg)](#performance--benchmarks)
 [![Latency](https://img.shields.io/badge/Latency-Sub--50ms_CPU-success.svg)](#performance--benchmarks)
 [![GPU Requirement](https://img.shields.io/badge/GPU-0%25_CPU_Only-brightgreen.svg)](#performance--benchmarks)
-[![Target Hardware](https://img.shields.io/badge/Devices-Car_Android_|_Smartwatch_|_Linux_Laptop-orange.svg)](#target-platform-blueprints)
+[![Target Hardware](https://img.shields.io/badge/Vehicles-Cars_(EV_&_Petrol)_|_Two--Wheelers_(Scooters_&_Bikes)-orange.svg)](#target-platform-blueprints)
 [![Python](https://img.shields.io/badge/Python-3.9+-3776ab.svg)](pyproject.toml)
 
 </div>
@@ -18,13 +18,15 @@
 
 ## ⚡ Overview
 
-**Orqanta AI** (powered by the **Psycho Engine**) is an ultra-fast, local foundation model built specifically for severely resource-constrained devices—including **Android Automotive car infotainment units**, **WearOS / Linux smartwatches**, **Raspberry Pi**, and **low-power Linux laptops**.
+**Orqanta AI** (powered by the **Psycho Engine**) is an ultra-fast, offline foundation tool-calling and telemetry intelligence model engineered specifically for **Vehicles**:
+- 🚗 **Cars (Electric & Petrol / ICE / Hybrid)**: Runs on Android Automotive OS (AAOS) & Linux In-Vehicle Infotainment (IVI) head units.
+- 🛵 **Two-Wheelers (Electric Scooters & Petrol Motorcycles)**: Runs on ARM64 Digital Instrument Clusters & Smart TFT Dashboards (Ather, TVS, Ola, Royal Enfield Tripper style).
 
-Unlike multi-gigabyte LLMs that require heavy GPUs and cloud APIs, Orqanta AI packs grammar-constrained tool calling, structured JSON extraction, and semantic understanding into a single **34MB binary container** that runs in **less than 80MB of RAM** with **sub-50ms CPU response times** (guaranteed under 2 seconds on any 2GB RAM device or lower).
+Unlike multi-gigabyte cloud LLMs that require heavy GPUs, fast internet, and massive power, Orqanta AI packs grammar-constrained function calling, structured JSON extraction, and automotive telemetry reasoning into a single **34MB binary container** that executes in **less than 80MB of RAM** with **sub-50ms CPU response times** (guaranteed under 2 seconds on any 1GB–2GB RAM vehicle ECU).
 
-- 🏎️ **Instant Output Under 2s**: Typical first-token latency is **15ms - 45ms** on ordinary CPU cores.
-- 💾 **Runs on $\le$ 2GB RAM**: Consumes only **~79MB peak RAM** during inference; runs comfortably on 512MB-2GB RAM systems.
-- 🚫 **Zero GPU / Cloud Dependency**: Completely self-contained, air-gapped, and runs 100% on CPU.
+- 🏎️ **Instant Output Under 2s**: Typical first-token latency is **15ms - 45ms** on ordinary embedded ARM64/x86 CPU cores.
+- 💾 **Runs on $\le$ 2GB RAM**: Consumes only **~79MB peak RAM** during inference; leaves 90%+ RAM free for GPS navigation and digital cluster rendering.
+- 🚫 **Zero GPU / Cloud Dependency**: 100% self-contained, air-gapped, and runs in dead zones, remote highways, and underground tunnels.
 - 🎯 **Reliable Tool Calling & Extraction**: Byte-level grammar decoding eliminates hallucinated tool schemas and unparseable JSON.
 
 ---
@@ -38,7 +40,7 @@ Unlike multi-gigabyte LLMs that require heavy GPUs and cloud APIs, Orqanta AI pa
 | **GPU / NPU** | **Not Needed (CPU Only)** | Heavily Recommended | Cloud Server |
 | **Latency / Response Time** | **< 50 ms (Under 2s SLA)** | 1.5s – 8.0s | 500ms – 3000ms |
 | **Decode Throughput** | **120 – 560 tokens/sec** | 15 – 35 tokens/sec | Variable |
-| **Target Hardware** | **Car Head Units, Smartwatches, Laptops** | High-end phones, PCs | Connected devices only |
+| **Target Hardware** | **Car Head Units, Bike Digital Clusters** | High-end phones, PCs | Connected devices only |
 
 ---
 
@@ -58,18 +60,22 @@ Orqanta AI is built upon a **Laddered Simple Attention Network**:
 ```text
 Orqanta-AI/
 ├── bin/
-│   ├── linux-x86_64/orqanta     # Native x86_64 Linux binary (Laptops & Desktops)
-│   └── android-arm64/orqanta    # Native ARM64 binary (Car Android & Smartwatches)
+│   ├── linux-x86_64/orqanta     # Native x86_64 Linux binary (Testing & Linux IVI)
+│   └── android-arm64/orqanta    # Native ARM64 binary (Car Android & Cluster Displays)
 ├── models/
 │   └── orqanta.cact             # Base model container (34MB)
-├── Orqanta_AI_Dataset_v1/        # 360-example SFT Automotive Telemetry Dataset
+├── Orqanta_AI_Dataset_v1/        # 360-example SFT Car Telemetry Dataset (EV & Petrol)
 │   ├── train.jsonl              # 288 training chat dialogues
 │   ├── validation.jsonl         # 36 validation dialogues
 │   ├── test.jsonl               # 36 held-out test records
 │   ├── orqanta_ai_dataset.csv   # Flat CSV telemetry representation
-│   ├── sample_preview.json      # Quick sample dialogues
-│   ├── DATASET_CARD.md          # Coverage & safety boundaries card
-│   └── README.md                # Dataset documentation
+│   └── DATASET_CARD.md          # Coverage & safety boundaries card
+├── Orqanta_TwoWheeler_Dataset_v1/# 380-example SFT Two-Wheeler Dataset (Bikes & Scooters)
+│   ├── train.jsonl              # 304 training dialogues (Electric & Petrol)
+│   ├── validation.jsonl         # 35 validation dialogues
+│   ├── test.jsonl               # 41 held-out test dialogues
+│   ├── two_wheeler_dataset.csv  # Flat CSV representation
+│   └── DATASET_CARD.md          # Scope & maintenance/tyre safety card
 ├── include/
 │   └── orqanta.h                # C/C++ API header
 ├── lib/
@@ -78,14 +84,17 @@ Orqanta-AI/
 ├── orqanta_ai/                  # Python SDK & runtime package
 ├── orqanta/                     # Package import alias (`import orqanta`)
 ├── examples/
-│   ├── car_android/             # In-car HVAC, GPS navigation, automotive telemetry & ADB deployer
-│   │   ├── orqanta_car_assistant.py # Offline Orqanta-AI telemetry & DTC assistant
+│   ├── car_android/             # In-car HVAC, GPS navigation, EV/ICE telemetry & ADB deployer
+│   │   ├── orqanta_car_assistant.py # Offline car telemetry & DTC diagnostic assistant
 │   │   ├── car_assistant.py     # Real-time climate, windows, and navigation controller
-│   │   └── car_tools.json       # Automotive vehicle property schemas
-│   ├── smartwatch/              # WearOS heart rate, timer, quick replies & ADB deployer
-│   └── linux_laptop/            # Laptop battery, volume, Wi-Fi & local HTTP daemon
+│   │   ├── car_tools.json       # Automotive vehicle property schemas
+│   │   └── deploy_car_adb.sh    # ADB push script for Android Automotive
+│   ├── two_wheeler/             # Scooter & Motorcycle cluster assistant
+│   │   ├── two_wheeler_assistant.py # EV battery range & petrol mileage cluster assistant
+│   │   └── two_wheeler_tools.json # Two-wheeler instrument cluster schemas
+│   └── voice_assistant.py       # Vehicle cockpit mic & helmet intercom voice pipeline
 └── scripts/
-    ├── eval_dataset.py          # Dataset validator & latency benchmark
+    ├── eval_dataset.py          # Dual dataset benchmark & latency validator
     └── edge/                    # Edge conversion & deployment tools
 ```
 
@@ -95,14 +104,14 @@ Orqanta-AI/
 
 ### 1. Standalone Binary CLI (Zero Dependencies)
 
-Run directly from your terminal on Linux laptops:
+Run directly from your terminal:
 
 ```bash
-# One-shot tool calling with prompt
+# Vehicle tool calling with natural language prompt
 ./bin/linux-x86_64/orqanta \
   --model models/orqanta.cact \
-  --tools examples/linux_laptop/laptop_tools.json \
-  --prompt "Check my battery percentage and set volume to 50"
+  --tools examples/car_android/car_tools.json \
+  --prompt "Check diagnostic trouble codes and set temperature to 21 degrees"
 ```
 
 **Output (< 40ms, 79MB RAM):**
@@ -111,10 +120,10 @@ Run directly from your terminal on Linux laptops:
   "type": "call",
   "success": true,
   "function_calls": [
-    {"name": "get_battery_status", "arguments": {}},
-    {"name": "set_system_volume", "arguments": {"volume": 50, "mute": false}}
+    {"name": "query_diagnostic_trouble_codes", "arguments": {"subsystem": "all"}},
+    {"name": "set_climate", "arguments": {"temperature": 21}}
   ],
-  "reasoning": "Check battery; volume 50 from '50'.",
+  "reasoning": "DTC diagnostics -> query_diagnostic_trouble_codes; temp 21 -> set_climate 21.",
   "confidence": 0.942,
   "peak_ram_mb": 79.0
 }
@@ -122,25 +131,7 @@ Run directly from your terminal on Linux laptops:
 
 ---
 
-### 2. Local HTTP Microservice Daemon
-
-Launch Orqanta as a local microservice on any port:
-
-```bash
-./examples/linux_laptop/run_local_server.sh 8080
-```
-
-Query the server via curl:
-
-```bash
-curl -X POST http://127.0.0.1:8080/complete \
-     -H "Content-Type: application/json" \
-     -d '{"input": "Open the terminal and check system battery"}'
-```
-
----
-
-### 3. Python SDK
+### 2. Python SDK
 
 Install in development mode:
 
@@ -148,19 +139,19 @@ Install in development mode:
 pip install -e .
 ```
 
-Define tools with Python type annotations and run:
+Define vehicle tools with Python type annotations and run:
 
 ```python
 import orqanta
 
 @orqanta.tool
-def set_car_climate(temperature: int, fan: int = 3):
+def set_cabin_climate(temperature: int, fan: int = 3):
     """Adjust in-car climate temperature in Celsius and fan speed."""
     print(f"Setting cabin temperature to {temperature}°C (Fan: {fan})")
     return {"status": "success", "temp": temperature}
 
 # Initialize agent (automatically links local binary & models/orqanta.cact)
-agent = orqanta.Orqanta(tools=[set_car_climate])
+agent = orqanta.Orqanta(tools=[set_cabin_climate])
 
 # Execute command
 result = agent.run("Turn the car AC to 21 degrees with fan speed 4")
@@ -172,91 +163,87 @@ print(result["results"])
 
 ## 🎯 Target Platform Blueprints
 
-### 🚗 1. In-Car Android & Orqanta-AI (Automotive Telemetry Intelligence)
+### 🚗 1. In-Car Android & Linux IVI (Electric & Petrol Cars)
 
-Orqanta AI is tuned for Android head units with 1GB – 2GB of RAM:
-- Controls HVAC climate, seat warmers, windows, sunroof, GPS navigation, and media.
-- **Orqanta-AI Telemetry Intelligence**: Offline question-answering over local vehicle telemetry, battery thermal alarms, OBD-II diagnostic codes (DTCs), range trends, and ADAS event logs.
-- **Bundled Dataset (`Orqanta_AI_Dataset_v1/`)**: 360 curated SFT examples across 10 automotive domains:
-  - `diagnostics`: OBD-II & CAN DTC code interpretations (`P0420`, `P0128`, `U0100`, `C0035`)
-  - `thermal_event`: Battery thermal warnings, peak temperatures (`BAT-015`), and cooling status
-  - `range_trend`: Range degradation vs. speed, ambient temperature, and HVAC load
-  - `adas_event`: Forward collision warnings, lane-keep alerts, camera obstruction logs
-  - `event_filtering`: Time-indexed event logs and filtering
-  - `energy_efficiency`: City vs. highway kWh/100km comparative analysis
-  - `data_ingestion`: CAN/CAN-FD, SOME/IP, Android Vehicle HAL, and QNX logs
-  - `safety_privacy`: Strict non-control boundaries, distinguishing observed facts from possible causes
-  - `missing_data`: Uncertainty awareness when sensors are absent
-  - `comparative_analysis`: Multi-trip correlation
-- **Try Orqanta-AI In-Car Assistant:**
+Orqanta AI is tuned for Android head units (AAOS) and Automotive Grade Linux (AGL) with 1GB – 2GB of RAM:
+- **Electric Vehicles (EV)**: High-voltage battery pack thermal telemetry (`BAT-015`), SOC degradation trends, charging rate, and regenerative braking analysis.
+- **Petrol / ICE Cars**: Fuel consumption, engine RPM, coolant temperature, OBD-II DTC diagnostic codes (`P0420`, `P0128`, `U0100`, `C0035`), and oil change intervals.
+- **Body & Comfort Controls**: Cabin HVAC climate, seat warmers, windows, sunroof, and navigation.
+- **Run the Car Assistant Demo:**
   ```bash
   python3 examples/car_android/orqanta_car_assistant.py
   ```
-- **Inspect & Evaluate Dataset Latency:**
+- **Push & Run via ADB to Android Automotive:**
   ```bash
-  python3 scripts/eval_dataset.py
+  cd examples/car_android
+  ./deploy_car_adb.sh
   ```
-- **Push & Run via ADB:**
+
+---
+
+### 🛵 2. Two-Wheelers (Electric Scooters & Petrol Motorcycles)
+
+Orqanta AI runs natively on low-power ARM64 Digital Instrument Clusters and TFT Dashboards:
+- **Electric Scooters (Ather, Ola, TVS iQube, Chetak style)**: Battery SOC %, real-time range estimation by riding mode (Eco vs. Sport), battery cell temperature, and regenerative braking.
+- **Petrol Motorcycles (Royal Enfield, Pulsar, KTM, Duke, Splendor style)**: Fuel tank level, Distance-To-Empty (DTE), average mileage (km/L), trip meter, and scheduled service interval.
+- **Safety & TPMS Alerts**: Real-time Tyre Pressure Monitoring System (TPMS) low-pressure alerts and chain slack warnings.
+- **Run the Two-Wheeler Cluster Demo:**
+  ```bash
+  python3 examples/two_wheeler/two_wheeler_assistant.py
+  ```
+
+---
+
+### 🎙️ 3. Vehicle Voice Command Pipeline (Cockpit Mic & Helmet Intercom)
+
+Test the voice assistant pipeline designed for steering wheel push-to-talk microphones and Bluetooth helmet intercoms:
 
 ```bash
-cd examples/car_android
-chmod +x deploy_car_adb.sh
-./deploy_car_adb.sh
-```
-
-Or execute directly on the Android unit:
-
-```bash
-adb shell "/data/local/tmp/orqanta_ai/orqanta \
-  --model /data/local/tmp/orqanta_ai/orqanta.cact \
-  --tools /data/local/tmp/orqanta_ai/car_tools.json \
-  --prompt 'Set temperature to 20 degrees and open sunroof'"
+python3 examples/voice_assistant.py
 ```
 
 ---
 
-### ⌚ 2. Smartwatches (WearOS / Linux Wearables)
+## 📊 Dual Dataset Benchmarks
 
-Smartwatches operate under extreme memory and battery budgets:
-- Queries optical PPG heart rate sensor, pedometer steps, workout timers.
-- Generates canned message replies directly on device.
-- **Deploy to Smartwatch:**
+Orqanta AI includes **740 curated SFT vehicle dialogues** across both four-wheeler and two-wheeler mobility domains:
 
 ```bash
-cd examples/smartwatch
-chmod +x deploy_watch_adb.sh
-./deploy_watch_adb.sh
+python3 scripts/eval_dataset.py
+```
+
+```text
+====================================================================
+  🚗 Car (EV & Petrol) SFT Dataset Overview (Orqanta_AI_Dataset_v1)
+====================================================================
+  • Total Examples:    360 (Train: 288 | Val: 36 | Test: 36)
+  • Coverage:          DTC diagnostics, battery thermal warnings, range trends,
+                       energy efficiency, ADAS event filtering, CAN/HAL ingestion.
+
+====================================================================
+  🛵 Two-Wheeler SFT Dataset Overview (Orqanta_TwoWheeler_Dataset_v1)
+====================================================================
+  • Total Examples:    380 (Train: 304 | Val: 35 | Test: 41)
+  • Coverage:          EV scooter battery & range, petrol bike mileage km/L,
+                       TPMS tyre pressure alerts, maintenance reminders, trip comparison.
+====================================================================
 ```
 
 ---
 
-### 💻 3. Linux Laptops (x86_64 / ARM64)
+## 🔧 C / C++ Embedded Integration
 
-Control OS functions without heavy background CPU overhead:
-- Volume control, brightness, Wi-Fi toggling, battery status, process launching.
-- **Run the Python Laptop Assistant:**
-
-```bash
-python3 examples/linux_laptop/laptop_assistant.py
-```
-
----
-
-## 🔧 C / C++ Integration
-
-Integrate Orqanta AI directly into embedded C/C++ applications using `include/orqanta.h` and `lib/liborqanta.a`:
+Embed Orqanta AI directly into vehicle firmware and ECU daemons using `include/orqanta.h` and `lib/liborqanta.a`:
 
 ```c
 #include "orqanta.h"
 #include <stdio.h>
 
 int main() {
-    // Load model from memory buffer
-    // orqanta_init(system_prompt, tools_json, NULL);
     char out_buffer[4096];
-    int rc = orqanta_complete("Turn on headlights", NULL, 0, 512, out_buffer, sizeof(out_buffer));
+    int rc = orqanta_complete("Check battery temperature and range", NULL, 0, 512, out_buffer, sizeof(out_buffer));
     if (rc >= 0) {
-        printf("Orqanta Response: %s\n", out_buffer);
+        printf("Vehicle Action: %s\n", out_buffer);
     }
     return 0;
 }

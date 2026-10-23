@@ -1,0 +1,63 @@
+[
+  {
+    "name": "check_ev_battery_and_range",
+    "description": "Query electric scooter / motorcycle battery percentage (SOC), estimated range, and charging status",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "ride_mode": {
+          "type": "string",
+          "description": "Current ride mode: eco, ride, sport, or warp"
+        }
+      }
+    }
+  },
+  {
+    "name": "check_petrol_fuel_and_mileage",
+    "description": "Query petrol scooter / motorcycle fuel tank level, distance-to-empty (DTE), and current mileage",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "get_maintenance_and_tyre_status",
+    "description": "Query tyre pressure monitoring (TPMS), brake pad wear, and scheduled service interval",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "type": "string",
+          "description": "Component: tyre_pressure, brake_pads, oil_service, chain_slack, or all"
+        }
+      }
+    }
+  },
+  {
+    "name": "set_riding_mode",
+    "description": "Switch cluster riding profile: eco, city, sport, or rain mode",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "Target riding mode: eco, city, sport, or rain"
+        }
+      },
+      "required": ["mode"]
+    }
+  },
+  {
+    "name": "get_trip_efficiency_summary",
+    "description": "Analyze recent ride efficiency: Wh/km for EV or km/L for petrol, top speed, and distance",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "trip_id": {
+          "type": "string",
+          "description": "Trip identifier or 'latest'"
+        }
+      }
+    }
+  }
+]
