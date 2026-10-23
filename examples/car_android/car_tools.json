@@ -74,5 +74,56 @@
       },
       "required": ["action"]
     }
+  },
+  {
+    "name": "query_diagnostic_trouble_codes",
+    "description": "Query active or stored automotive Diagnostic Trouble Codes (DTCs) like P0420, P0128, U0100, C0035",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "subsystem": {
+          "type": "string",
+          "description": "Subsystem: powertrain, chassis, body, network, or all"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_battery_thermal_telemetry",
+    "description": "Retrieve high-voltage battery cell temperature, thermal alarms, and cooling circuit status",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "get_trip_telemetry_analysis",
+    "description": "Analyze vehicle trip energy consumption, speed correlation, range decay, and HVAC load",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "days": {
+          "type": "integer",
+          "description": "Number of days of trip logs to analyze"
+        }
+      }
+    }
+  },
+  {
+    "name": "filter_adas_events",
+    "description": "Search and filter ADAS disengagements, collision alerts, and sensor events by date",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "Date to filter events in YYYY-MM-DD format"
+        },
+        "event_type": {
+          "type": "string",
+          "description": "Event type: adas_disengagement, forward_collision, lane_warning, or sensor_error"
+        }
+      }
+    }
   }
 ]

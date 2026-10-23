@@ -102,3 +102,6 @@ orqanta-ui.*
 out/
 out_x86/
 model_out/
+*.zip
+orqanta-ai-launch/
+brag-output/

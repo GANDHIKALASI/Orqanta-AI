@@ -28,7 +28,7 @@ def _training_rng(seed):
     return np.random.default_rng(int(seed))
 
 
-DEFAULT_BASE = "checkpoints/needle3.safetensors"
+DEFAULT_BASE = "checkpoints/orqanta.safetensors"
 
 OPENROUTER_URL = os.environ.get(
     "OPENROUTER_URL", "https://openrouter.ai/api/v1/chat/completions"
@@ -66,8 +66,8 @@ def _openrouter(messages, model, api_key, temperature=0.9):
     request = urllib.request.Request(OPENROUTER_URL, data=payload, headers={
         "Authorization": "Bearer " + api_key,
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://github.com/cactus-compute/needle",
-        "X-Title": "needle",
+        "HTTP-Referer": "https://github.com/GANDHIKALASI/Orqanta-AI",
+        "X-Title": "orqanta",
     })
     with urllib.request.urlopen(request, timeout=180) as response:
         return json.loads(response.read().decode("utf-8"))["choices"][0]["message"]["content"]
@@ -184,7 +184,7 @@ def generate_main(args):
     if args.tools:
         with open(args.tools, encoding="utf-8") as handle:
             tools = json.load(handle)
-        out = args.output or "needle_data.jsonl"
+        out = args.output or "orqanta_data.jsonl"
         rows = generate_dataset(tools, args.num_samples, model=model,
                                 batch_size=args.batch_size, workers=workers)
         with open(out, "w", encoding="utf-8") as handle:
@@ -495,7 +495,7 @@ def finetune_local(args, progress=None):
                  f"W{WEIGHT_BITS} weights the archive ships")
 
     os.makedirs(args.checkpoint_dir, exist_ok=True)
-    out = args.out or os.path.join(args.checkpoint_dir, "needle_lora.safetensors")
+    out = args.out or os.path.join(args.checkpoint_dir, "orqanta_lora.safetensors")
     write_adapter(out, {
         "lora": {"/".join(p): {"A": np.asarray(v["A"]), "B": np.asarray(v["B"])}
                  for p, v in lora.items()},
@@ -505,5 +505,5 @@ def finetune_local(args, progress=None):
         "seed": seed,
     })
     print(f"  {'adapter':<9} {out}")
-    print(f"  {'next':<9} needle build {base_path} --lora {out}")
-    print(f"  {'note':<9} local tuning leaves the confidence head untrained; needle build drops it and confidence reports None")
+    print(f"  {'next':<9} orqanta build {base_path} --lora {out}")
+    print(f"  {'note':<9} local tuning leaves the confidence head untrained; orqanta build drops it and confidence reports None")

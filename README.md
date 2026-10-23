@@ -62,6 +62,14 @@ Orqanta-AI/
 │   └── android-arm64/orqanta    # Native ARM64 binary (Car Android & Smartwatches)
 ├── models/
 │   └── orqanta.cact             # Base model container (34MB)
+├── Orqanta_VehicleGPT_Dataset_v1/ # 360-example SFT Automotive Telemetry Dataset
+│   ├── train.jsonl              # 288 training chat dialogues
+│   ├── validation.jsonl         # 36 validation dialogues
+│   ├── test.jsonl               # 36 held-out test records
+│   ├── vehiclegpt_dataset.csv   # Flat CSV telemetry representation
+│   ├── sample_preview.json      # Quick sample dialogues
+│   ├── DATASET_CARD.md          # Coverage & safety boundaries card
+│   └── README.md                # Dataset documentation
 ├── include/
 │   └── orqanta.h                # C/C++ API header
 ├── lib/
@@ -70,10 +78,14 @@ Orqanta-AI/
 ├── orqanta_ai/                  # Python SDK & runtime package
 ├── orqanta/                     # Package import alias (`import orqanta`)
 ├── examples/
-│   ├── car_android/             # In-car HVAC, GPS navigation & ADB deployer
+│   ├── car_android/             # In-car HVAC, GPS navigation, VehicleGPT telemetry & ADB deployer
+│   │   ├── vehiclegpt_assistant.py # Offline VehicleGPT telemetry & DTC assistant
+│   │   ├── car_assistant.py     # Real-time climate, windows, and navigation controller
+│   │   └── car_tools.json       # Automotive vehicle property schemas
 │   ├── smartwatch/              # WearOS heart rate, timer, quick replies & ADB deployer
 │   └── linux_laptop/            # Laptop battery, volume, Wi-Fi & local HTTP daemon
 └── scripts/
+    ├── eval_vehiclegpt.py       # VehicleGPT dataset validator & latency benchmark
     └── edge/                    # Edge conversion & deployment tools
 ```
 
@@ -160,11 +172,30 @@ print(result["results"])
 
 ## 🎯 Target Platform Blueprints
 
-### 🚗 1. In-Car Android (Android Automotive OS / Car Head Units)
+### 🚗 1. In-Car Android & VehicleGPT (Automotive Telemetry Intelligence)
 
 Orqanta AI is tuned for Android head units with 1GB – 2GB of RAM:
-- Controls HVAC climate, seat warmers, windows, sunroof.
-- Dispatches offline GPS navigation commands and audio playback.
+- Controls HVAC climate, seat warmers, windows, sunroof, GPS navigation, and media.
+- **VehicleGPT Telemetry Intelligence**: Offline question-answering over local vehicle telemetry, battery thermal alarms, OBD-II diagnostic codes (DTCs), range trends, and ADAS event logs.
+- **Bundled Dataset (`Orqanta_VehicleGPT_Dataset_v1/`)**: 360 curated SFT examples across 10 automotive domains:
+  - `diagnostics`: OBD-II & CAN DTC code interpretations (`P0420`, `P0128`, `U0100`, `C0035`)
+  - `thermal_event`: Battery thermal warnings, peak temperatures (`BAT-015`), and cooling status
+  - `range_trend`: Range degradation vs. speed, ambient temperature, and HVAC load
+  - `adas_event`: Forward collision warnings, lane-keep alerts, camera obstruction logs
+  - `event_filtering`: Time-indexed event logs and filtering
+  - `energy_efficiency`: City vs. highway kWh/100km comparative analysis
+  - `data_ingestion`: CAN/CAN-FD, SOME/IP, Android Vehicle HAL, and QNX logs
+  - `safety_privacy`: Strict non-control boundaries, distinguishing observed facts from possible causes
+  - `missing_data`: Uncertainty awareness when sensors are absent
+  - `comparative_analysis`: Multi-trip correlation
+- **Try VehicleGPT In-Car Assistant:**
+  ```bash
+  python3 examples/car_android/vehiclegpt_assistant.py
+  ```
+- **Inspect & Evaluate Dataset Latency:**
+  ```bash
+  python3 scripts/eval_vehiclegpt.py
+  ```
 - **Push & Run via ADB:**
 
 ```bash
