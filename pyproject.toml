@@ -1,0 +1,61 @@
+[project]
+name = "orqanta-ai"
+version = "3.2.1"
+description = "An ultra-fast, lightweight foundation model for edge devices (Android Car, Smartwatch, Linux laptops): <80MB RAM, <2s latency, CPU-only."
+requires-python = ">=3.9"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Gandhi Kalasi", email = "117009786+GANDHIKALASI@users.noreply.github.com" }
+]
+dependencies = [
+    "huggingface_hub",
+]
+
+[project.urls]
+Homepage = "https://github.com/GANDHIKALASI/Orqanta-AI"
+Repository = "https://github.com/GANDHIKALASI/Orqanta-AI.git"
+
+[project.optional-dependencies]
+train = [
+  "numpy",
+  "jax",
+  "jaxlib",
+  "flax>=0.10.2",
+  "optax",
+  "safetensors",
+  "sentencepiece",
+  "whisper-normalizer",
+  "soxr"
+]
+gpu = ["jax[cuda12]"]
+metal = [
+    "jax==0.4.38",
+    "jaxlib==0.4.38",
+    "jax-metal"
+]
+mic = ["numpy", "soxr", "sounddevice"]
+compare = ["openai-whisper", "moonshine-voice"]
+test = ["pytest", "pydantic"]
+mlx = ["mlx[cpu]"]
+
+[project.scripts]
+orqanta = "orqanta_ai.cli:main"
+orqanta-ai = "orqanta_ai.cli:main"
+psycho = "orqanta_ai.cli:main"
+needle = "orqanta_ai.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["orqanta*", "orqanta_ai*"]
+
+[tool.setuptools.package-data]
+"orqanta_ai.model" = ["*.model", "*.vocab"]
+"orqanta_ai.playground" = ["index.html", "app.js", "style.css"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: end-to-end JAX build/finetune tests (init a tiny model)"]

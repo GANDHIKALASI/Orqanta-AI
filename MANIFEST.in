@@ -1,0 +1,7 @@
+include README.md LICENSE llms.txt
+recursive-include orqanta_ai/model *.model *.vocab
+include orqanta_ai/playground/index.html orqanta_ai/playground/app.js orqanta_ai/playground/style.css
+recursive-include bin *
+recursive-include include *
+recursive-include lib *
+recursive-include models *

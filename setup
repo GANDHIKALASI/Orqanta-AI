@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -e
+
+VENV_DIR=".venv"
+
+PYTHON=""
+for candidate in python3.12 python3.11 python3.10 python3.9 python3; do
+    if command -v "$candidate" >/dev/null 2>&1 && \
+       "$candidate" -c "import sys; exit(0 if sys.version_info >= (3, 9) else 1)" 2>/dev/null; then
+        PYTHON="$candidate"
+        break
+    fi
+done
+if [ -z "$PYTHON" ]; then
+    echo "Python >= 3.9 is required." >&2
+    exit 1
+fi
+
+# Use uv when available (10-100x faster), fall back to pip.
+UV_INSTALL="pip install"
+UV_VENV="$PYTHON -m venv"
+if command -v uv >/dev/null 2>&1; then
+    echo "  uv detected — using uv for package management"
+    UV_INSTALL="uv pip install"
+    UV_VENV="uv venv"
+fi
+
+[ -d "$VENV_DIR" ] || $UV_VENV "$VENV_DIR"
+source "$VENV_DIR/bin/activate"
+
+if [ "$UV_INSTALL" = "pip install" ]; then
+    pip install --upgrade pip -q
+fi
+$UV_INSTALL -e ".[train,mic]" -q
+
+if command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi >/dev/null 2>&1; then
+    echo "NVIDIA GPU detected; installing gpu extras..."
+    $UV_INSTALL -e ".[gpu]" -q
+fi
+
+python -m orqanta_ai.cli --help
