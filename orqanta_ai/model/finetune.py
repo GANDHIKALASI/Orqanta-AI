@@ -507,3 +507,28 @@ def finetune_local(args, progress=None):
     print(f"  {'adapter':<9} {out}")
     print(f"  {'next':<9} orqanta build {base_path} --lora {out}")
     print(f"  {'note':<9} local tuning leaves the confidence head untrained; orqanta build drops it and confidence reports None")
+
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(
+        prog="orqanta finetune",
+        description="Fine-tune Orqanta on automotive & two-wheeler telemetry JSONL datasets"
+    )
+    parser.add_argument("jsonl_path", type=str, nargs="?", default="Orqanta_AI_Dataset_v1/train.jsonl",
+                        help="Path to JSONL training data")
+    parser.add_argument("--checkpoint", type=str, default=None,
+                        help="Base model checkpoint (.safetensors)")
+    parser.add_argument("--epochs", type=int, default=3, help="Number of training epochs")
+    parser.add_argument("--batch-size", type=int, default=16, help="Batch size")
+    parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate")
+    parser.add_argument("--lora-rank", type=int, default=16, help="LoRA adapter rank")
+    parser.add_argument("--lora-alpha", type=float, default=32.0, help="LoRA scaling alpha")
+    parser.add_argument("--max-len", type=int, default=1024, help="Max training sequence length")
+    parser.add_argument("--val-split", type=float, default=0.1, help="Validation split fraction")
+    parser.add_argument("--seed", type=int, default=0, help="Random seed")
+    parser.add_argument("--checkpoint-dir", type=str, default="checkpoints", help="Checkpoint output directory")
+    parser.add_argument("--out", type=str, default=None, help="Output adapter path (.safetensors)")
+    
+    args = parser.parse_args()
+    finetune_local(args)
