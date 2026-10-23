@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Needle 2 Playground | Cactus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-border">
+      <div class="header-inner">
+        <a class="header-logo" href="https://cactuscompute.com">
+          <img src="https://cactuscompute.com/assets/cactus_white.png" alt="Cactus" width="32" height="32">
+          <span>Cactus</span>
+        </a>
+        <nav class="header-nav">
+          <span class="nav-current">Needle 2 Playground</span>
+        </nav>
+        <div class="header-spacer"></div>
+        <button class="tools-toggle" onclick="togglePanel()" aria-label="Toggle tools panel">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Tools</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <aside id="sidebar">
+      <div class="panel-section">
+        <label class="panel-label">Presets</label>
+        <div class="presets" id="presets"></div>
+      </div>
+      <div class="panel-section panel-tools">
+        <div class="panel-header">
+          <label class="panel-label">Tools JSON</label>
+          <label class="file-btn">
+            Upload
+            <input type="file" id="toolsFile" accept=".json" onchange="loadToolsFile(this)">
+          </label>
+        </div>
+        <textarea id="tools" spellcheck="false" placeholder="Paste tool definitions here..."></textarea>
+        <button class="btn-finetune" onclick="openFinetuneModal()">Finetune on these tools</button>
+      </div>
+    </aside>
+    <div class="resize-handle" id="resizeHandle"></div>
+    <section class="query-area">
+      <div class="query-section">
+        <div class="panel-header">
+          <label class="panel-label">Query</label>
+          <span class="model-name" id="modelName"></span>
+          <label class="file-btn">
+            Load model
+            <input type="file" id="modelFile" accept=".cact" onchange="loadModelFile(this)">
+          </label>
+        </div>
+        <div class="input-row">
+          <input id="query" type="text" placeholder="e.g. dim the bedroom lights to 20 percent" autofocus>
+          <button class="btn-primary" id="sendBtn" onclick="send()">Run</button>
+          <button class="btn-ghost" id="resetBtn" onclick="newChat()" title="Start a fresh conversation">New chat</button>
+        </div>
+        <p class="hint">Keep asking follow-up questions against the same tools - each Run is a fresh turn. Pick a preset or "New chat" to switch tools.</p>
+      </div>
+      <div class="result-section">
+        <label class="panel-label">Conversation</label>
+        <div class="conversation" id="conversation">
+          <div class="empty" id="emptyState">Pick a preset or type a query, then Run.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span class="modal-title">Finetune on your tools</span>
+        <button class="modal-close" id="modalCloseBtn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note">We generate tool-calling data for the tools in the sidebar with OpenRouter, LoRA-finetune the base model, and merge + export a tuned <span class="mono">.cact</span> you can download and run.</p>
+        <div class="modal-field">
+          <label class="modal-label">OpenRouter API Key</label>
+          <input type="password" id="ftApiKey" class="modal-input" placeholder="sk-or-..." autocomplete="off" spellcheck="false">
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Synthetic examples</label>
+          <input type="number" id="ftSamples" class="modal-input modal-input-sm" value="200" min="25" step="25">
+        </div>
+        <div class="modal-steps" id="ftSteps">
+          <div class="modal-step" data-step="generating data"><span class="step-dot"></span>Generating data</div>
+          <div class="modal-step" data-step="training"><span class="step-dot"></span>Training</div>
+          <div class="modal-step" data-step="building"><span class="step-dot"></span>Building .cact</div>
+        </div>
+        <div class="ft-progress mono" id="ftProgress"></div>
+      </div>
+      <div class="modal-footer" id="ftFooter">
+        <button class="btn-primary modal-start" id="ftStartBtn" onclick="startFinetune()">Start Finetune</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span class="toast-msg" id="toastMsg"></span>
+    <button class="toast-close" onclick="dismissToast()">&times;</button>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
